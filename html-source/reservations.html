@@ -7,18 +7,13 @@
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css">
     <style>
-        .my-footer {
-            background-color: #5393f3;
-            margin-top: 1.5em;
-            height: 5em;
-            padding: 1em;
-            color: #ffffff;
-            font-size: 80%;
-        }
-
-        .room-image {
-            max-width: 50%;
+        #colorButton {
+            color: aqua;
         }
     </style>
 </head>
@@ -66,34 +61,80 @@
         <div class="col-md-6">
             <h1 class="text-center mt-4">Search for Availability</h1>
 
-            <form action="/reservations.html" method="get">
+            <form action="/reservations.html" class="needs-validation" method="get" novalidate>
                 <div class="row">
                     <div class="col">
-                        <div class="mb-3">
-                            <label class="form-label" for="start_date">Starting Date</label>
-                            <input required aria-describedby="startDateHelp" class="form-control" id="start_date"
-                                   name="start_date" type="date">
-                            <div class="form-text" id="startDateHelp">Enter your starting date in the form of
-                                YYYY-MM-DD
+                        <div class="row" id="reservation-dates-picker">
+                            <div class="col">
+                                <input class="form-control" name="start" placeholder="Arrival" required type="text">
+                            </div>
+                            <div class="col">
+                                <input class="form-control" name="end" placeholder="Departure" required type="text">
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="mb-3">
-                            <label class="form-label" for="end_date">Ending Date</label>
-                            <input required aria-describedby="endDateHelp" class="form-control" id="end_date" name="end_date"
-                                   type="date">
-                            <div class="form-text" id="endDateHelp">Enter your ending date in the form of YYYY-MM-DD
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
+                <hr>
                 <button class="btn btn-primary" type="submit">Search Availability</button>
             </form>
 
         </div>
     </div>
+
+
+    <!--   MODAL  -->
+    <div class="row">
+        <div class="col">
+            <p id="myParagraph">This is some text</p>
+            <button class="btn btn-outline-secondary" id="colorButton" data-bs-toggle="modal" data-bs-target="#availabilityModal">Click Me</button>
+            <!-- Modal -->
+            <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Choose Your Dates</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="checkAvailabilityForm" action="" method="post" novalidate class="needs-validation">
+                                <div class="row" id="modal-reservations-date-picker">
+                                    <div class="col">
+                                        <input type="text" class="form-control" required name="start" id="start" placeholder="Arrival">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" required name="end" id="end" placeholder="Departure">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="checkAvailabilityButton">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   MODAL  -->
+
 </div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Hello, world!
+        </div>
+    </div>
+</div>
+
 
 <div class="row my-footer">
     <div class="col">
@@ -112,5 +153,97 @@
 <script crossorigin="anonymous"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+<script src="https://unpkg.com/notie"></script>
+<script>
+
+    let attention = Prompt();
+
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+
+    const elem = document.getElementById('reservation-dates-picker');
+    const rangepicker = new DateRangePicker(elem, {
+        format: "yyyy-mm-dd",
+        buttonClass: 'btn',
+    });
+
+    document.getElementById('colorButton').addEventListener("click", function () {
+        // notify("This is my message", "warning")
+        attention.success();
+    })
+    
+    function notify(msg, type) {
+        notie.alert({
+            type: type,
+            text: msg,
+        })
+    }
+
+
+    const availabilityModal = document.getElementById("availabilityModal")
+    availabilityModal.addEventListener('show.bs.modal', event => {
+        const elem = document.getElementById('modal-reservations-date-picker');
+        const rangepicker = new DateRangePicker(elem, {
+            format: "yyyy-mm-dd",
+            buttonClass: 'btn',
+            clearBtn: true,
+        });
+    })
+
+    document.getElementById("checkAvailabilityButton").onclick=function () {
+        console.log([
+            document.getElementById("start").value,
+            document.getElementById("end").value,
+        ])
+    }
+
+    function Prompt() {
+        let toast = function (c) {
+            const {
+                msg = "",
+                position = "",
+
+            } = c;
+            console.log("clicked button and got toast");
+        }
+
+        let success = function () {
+            const toastTrigger = document.getElementById("colorButton")
+            const toastSuccess = document.getElementById("successToast")
+            if (toastTrigger) {
+                toastTrigger.addEventListener("click", () => {
+                    const toast = new bootstrap.Toast(toastSuccess)
+                    document.getElementById()
+
+
+                    toast.show()
+                })
+            }
+        }
+
+        return {
+            toast: toast,
+            success: success,
+        }
+    }
+</script>
+
 </body>
 </html>

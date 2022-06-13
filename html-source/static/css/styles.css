@@ -1,0 +1,13 @@
+.my-footer {
+    background-color: #5393f3;
+    margin-top: 1.5em;
+    height: 5em;
+    padding: 1em;
+    color: #ffffff;
+    font-size: 80%;
+}
+
+/* override styles here */
+.notie-container {
+    /*box-shadow: none;*/
+}
