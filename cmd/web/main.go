@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
-	"github.com/asc521/bookings/pkg/config"
-	"github.com/asc521/bookings/pkg/handlers"
-	"github.com/asc521/bookings/pkg/render"
+	"github.com/asc521/bookings/internal/config"
+	"github.com/asc521/bookings/internal/handlers"
+	"github.com/asc521/bookings/internal/render"
 	"log"
 	"net/http"
 	"time"

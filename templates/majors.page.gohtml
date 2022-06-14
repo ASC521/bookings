@@ -1,0 +1,85 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img src="/static/images/majors-suite.png" alt="room image" class="img-fluid mx-auto d-block img-thumbnail room-image">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center mt-4">Major's Suite</h1>
+                <p>
+                    Your home away from home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to
+                    remember.
+                    Your home away from home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to
+                    remember.
+                    Your home away from home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to
+                    remember.
+                    Your home away from home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to
+                    remember.
+                    Your home away from home, set on the majestic waters of the Atlantic Ocean, this will be a vacation to
+                    remember.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <a id="check-availability-button" href="#!" data-bs-toggle="modal" data-bs-target="#availabilityModal" class="btn btn-success">Check Availability</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choose Your Dates</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkAvailabilityForm" action="" method="post" novalidate class="needs-validation">
+                        <div class="row" id="modal-reservations-date-picker">
+                            <div class="col">
+                                <input type="text" class="form-control" required name="start" id="start" placeholder="Arrival">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" required name="end" id="end" placeholder="Departure">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="checkAvailabilityButton">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "js"}}
+    <script>
+        const availabilityModal = document.getElementById("availabilityModal")
+        console.log(availabilityModal)
+        availabilityModal.addEventListener('show.bs.modal', event => {
+            const elem = document.getElementById('modal-reservations-date-picker');
+            console.log(elem)
+            const rangepicker = new DateRangePicker(elem, {
+                format: "yyyy-mm-dd",
+                buttonClass: 'btn',
+                clearBtn: true,
+            });
+        })
+
+        document.getElementById("checkAvailabilityButton").onclick=function () {
+            console.log([
+                document.getElementById("start").value,
+                document.getElementById("end").value,
+            ])
+        }
+    </script>
+{{end}}
