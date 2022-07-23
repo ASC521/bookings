@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/justinas/nosurf"
 	"net/http"
+
+	"github.com/justinas/nosurf"
 )
 
 func NoSurf(next http.Handler) http.Handler {
